@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Recipe } from '../recipe.model';
+import { RecipeService } from '../recipe.service';
 
 @Component({
   selector: 'app-recipe-list',
@@ -7,14 +8,12 @@ import { Recipe } from '../recipe.model';
   styleUrls: ['./recipe-list.component.css']
 })
 export class RecipeListComponent {
-@Output()  recipeWasSelected = new EventEmitter<Recipe>();
-recipies: Recipe[] = [
-  new Recipe('Döner macht schöner','Lecker Döner','https://www.tuerkische-rezepte.net/wp-content/uploads/2021/05/doener.jpg'),
-  new Recipe('Dürüm aber auch','Lecker Dürüm','https://www.marions-kochbuch.de/dru-pic/3988.jpg')
-];
+  recipes: Recipe[];
 
-onRecipeSelected(recipe: Recipe){
-this.recipeWasSelected.emit(recipe);
-}
+  constructor(private recipeService: RecipeService){
 
+  }
+  ngOnInit(){
+    this.recipes = this.recipeService.getRecipes();
+  }
 }
